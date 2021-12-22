@@ -1,0 +1,52 @@
+---
+title: "DM_Project_2"
+author: "Nam Tran"
+date: "11/27/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readr); library(tidyverse); library(dplyr); library(psych); library(PerformanceAnalytics); library(skimr); library(dplyr); library(lessR); library(ggplot2); library(gridExtra); library(fastDummies)
+```
+
+```{r}
+Clean.df1 <- read.csv("Clean_df2.csv")
+
+```
+
+```{r}
+dim(Clean.df1)
+colnames(Clean.df1)
+```
+
+```{r}
+
+Clean.df2 <- Clean.df1[,-c(1,2,6,7,16,17,19,23)]
+
+```
+
+```{r}
+Clean.df3 <- fastDummies::dummy_cols(Clean.df2, 
+                                     select_columns = c("Coverage", "EmploymentStatus", "Gender", "Location.Code", "Marital.Status",
+                                                        "Policy.Type", "Renew.Offer.Type", "Sales.Channel", "Vehicle.Size", "Num.of.Complaints",
+                                                        "New.Num.of.Policies", "New.Car.Class","New.Education" ),
+                                     remove_first_dummy = T)
+```
+
+```{r}
+colnames(Clean.df3)
+```
+
+```{r}
+remove.val <- c(3,4,5,7,8,12,13,14,16,17,18,20,21,35,36,37)
+Clean.df4 <- Clean.df3[,-remove.val]
+
+```
+
+```{r}
+dim(Clean.df4)
+# write.csv(Clean.df2,"Response_Cleaned_data.csv", row.names = F)
+# write.csv(Clean.df4,"CLV_Cleaned_data.csv", row.names = F)
+```
+
